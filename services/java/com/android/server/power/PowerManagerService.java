@@ -403,6 +403,12 @@ public final class PowerManagerService extends IPowerManager.Stub
     public void init(Context context, LightsService ls,
             ActivityManagerService am, BatteryService bs, IBatteryStats bss,
             IAppOpsService appOps, DisplayManagerService dm) {
+        if (context == null) {
+            Slog.v(TAG, "Context is sad :(");
+        } else {
+            Slog.v(TAG, "Context is happy!");
+        }
+
         mContext = context;
         mLightsService = ls;
         mBatteryService = bs;
@@ -780,12 +786,16 @@ public final class PowerManagerService extends IPowerManager.Stub
             throw new IllegalArgumentException("lock must not be null");
         }
 
-        mContext.enforceCallingOrSelfPermission(android.Manifest.permission.WAKE_LOCK, null);
-        if (ws != null && ws.size() != 0) {
-            mContext.enforceCallingOrSelfPermission(
-                    android.Manifest.permission.UPDATE_DEVICE_STATS, null);
+        if (mContext == null) {
+          Slog.e(TAG, "mContext is null");
         } else {
-            ws = null;
+          mContext.enforceCallingOrSelfPermission(android.Manifest.permission.WAKE_LOCK, null);
+          if (ws != null && ws.size() != 0) {
+              mContext.enforceCallingOrSelfPermission(
+                      android.Manifest.permission.UPDATE_DEVICE_STATS, null);
+          } else {
+              ws = null;
+          }
         }
 
         final long ident = Binder.clearCallingIdentity();
