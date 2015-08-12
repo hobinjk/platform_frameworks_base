@@ -221,8 +221,8 @@ class ServerThread {
         boolean disableNonCoreServices = SystemProperties.getBoolean("config.disable_noncore", false);
         boolean disableNetwork = SystemProperties.getBoolean("config.disable_network", false);
         boolean disableAtlas = SystemProperties.getBoolean("config.disable_atlas", false);
-        boolean digitalPenCapable =
-            Resources.getSystem().getBoolean(com.android.internal.R.bool.config_digitalPenCapable);
+        boolean digitalPenCapable = false;
+            // Resources.getSystem().getBoolean(com.android.internal.R.bool.config_digitalPenCapable);
 
         try {
             Slog.i(TAG, "Display Manager");
@@ -540,7 +540,7 @@ class ServerThread {
                    int cneFeature = (enableCne == 1) ?
                        SystemProperties.getInt("persist.cne.feature", 0) : 0;
 
-                   if ( cneFeature > 0 && cneFeature < 10 ) {
+                   if ( cneFeature > 0 && cneFeature < 10 && false ) {
                        Slog.i(TAG, "QcConnectivity Service");
                        PathClassLoader qcsClassLoader =
                            new PathClassLoader("/system/framework/services-ext.jar",
