@@ -608,6 +608,7 @@ public class AudioService extends IAudioService.Stub {
     }
 
     private void createStreamStates() {
+        Log.i(TAG, "createStreamStates");
         int numStreamTypes = AudioSystem.getNumStreamTypes();
         VolumeStreamState[] streams = mStreamStates = new VolumeStreamState[numStreamTypes];
 
@@ -3593,6 +3594,10 @@ public class AudioService extends IAudioService.Stub {
                     int numStreamTypes = AudioSystem.getNumStreamTypes();
                     for (int streamType = numStreamTypes - 1; streamType >= 0; streamType--) {
                         VolumeStreamState streamState = mStreamStates[streamType];
+                        if (streamState == null) {
+                          Log.e(TAG, "streamState is null");
+                          continue;
+                        }
                         AudioSystem.initStreamVolume(streamType, 0, (streamState.mIndexMax + 5) / 10);
 
                         streamState.applyAllVolumes();
