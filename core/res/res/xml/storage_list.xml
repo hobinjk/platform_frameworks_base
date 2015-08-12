@@ -21,8 +21,5 @@
 
 <StorageList xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- removable is not set in nosdcard product -->
-    <storage
-        android:mountPoint="/storage/sdcard"
-        android:storageDescription="@string/storage_usb"
-        android:primary="true" />
+    <!-- sdcard0 is actually a link to this. Sometimes I just don't know -->
 </StorageList>
